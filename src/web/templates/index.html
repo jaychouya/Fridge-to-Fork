@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fridge-to-Fork</title>
+  <meta name="description" content="Fridge-to-Fork: 扫描冰箱食材，自动追踪库存与临期菜谱推荐。" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta property="og:title" content="Fridge-to-Fork" />
+  <meta property="og:description" content="扫描冰箱、追踪库存、临期提醒与菜谱推荐。" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
+  <header class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">AI Kitchen Assistant</p>
+        <h1>Fridge-to-Fork</h1>
+        <p class="subtitle">从冰箱照片到临期预警和菜谱推荐，一站式管理你的食材。</p>
+        <div class="hero-metrics">
+          <span class="metric">Smart Scan</span>
+          <span class="metric">Inventory Track</span>
+          <span class="metric">Recipe Rescue</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button id="themeToggle" class="secondary-btn" type="button" aria-label="Toggle dark mode">Dark</button>
+        <div class="status-chip" id="healthBadge" role="status" aria-live="polite">Checking...</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container dashboard" id="mainContent">
+    <section class="panel span-2" aria-label="冰箱扫描模块">
+      <div class="panel-head">
+        <h2><span class="icon">📷</span> 扫描冰箱</h2>
+      </div>
+      <form id="scanForm" class="row">
+        <label for="image" class="visually-hidden">上传冰箱照片</label>
+        <input type="file" id="image" accept="image/*" required aria-describedby="scanHint" />
+        <button type="submit">上传并分析</button>
+      </form>
+      <p id="scanHint" class="muted">支持 jpg/png/webp，建议清晰拍摄冰箱内部。</p>
+      <p id="scanMessage" class="muted" role="status" aria-live="polite"></p>
+      <div id="detectedIngredients" class="tag-list"></div>
+    </section>
+
+    <section class="panel" aria-label="库存模块">
+      <div class="panel-head">
+        <h2><span class="icon">🧊</span> 库存</h2>
+        <button id="refreshInventory">刷新</button>
+      </div>
+      <ul id="inventoryList" class="list"></ul>
+      <div id="inventoryEmpty" class="empty-state">
+        <div class="empty-art" aria-hidden="true"></div>
+        <p class="muted">暂无库存数据</p>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="菜谱推荐模块">
+      <div class="panel-head">
+        <h2><span class="icon">🍳</span> 推荐</h2>
+        <button id="getRecommend">获取菜谱</button>
+      </div>
+      <ul id="recommendList" class="list"></ul>
+      <div id="recommendEmpty" class="empty-state">
+        <div class="empty-art plate" aria-hidden="true"></div>
+        <p class="muted">暂无推荐结果</p>
+      </div>
+    </section>
+
+    <section class="panel span-2" aria-label="烹饪扣减模块">
+      <div class="panel-head">
+        <h2><span class="icon">✅</span> 标记已烹饪</h2>
+      </div>
+      <form id="cookedForm" class="row">
+        <label for="ingredient" class="visually-hidden">食材名</label>
+        <input type="text" id="ingredient" placeholder="食材名（canonical name）" required />
+        <label for="quantity" class="visually-hidden">数量</label>
+        <input type="number" id="quantity" min="0.1" step="0.1" placeholder="数量" required />
+        <button type="submit">提交扣减</button>
+      </form>
+      <p id="cookedResult" class="muted" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
